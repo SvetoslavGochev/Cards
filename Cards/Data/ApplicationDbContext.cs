@@ -16,10 +16,17 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-         builder.Entity<Card>()
-                .HasOne(c => c.User)
-                .WithMany(u => u.)
+            builder.Entity<Card>()
+                   .HasMany(c => c.UserCards)
+                   .WithMany(u => u.UserId)
+                   .
 
+            builder.Entity<Cat>()
+                   .HasOne(c => c.User)
+                   .WithMany(u => u.Cats)
+                   .HasForeignKey(c => c.UserId)
+                   .OnDelete(DeleteBehavior.Restrict);
+             
             base.OnModelCreating(builder);
         }
 
