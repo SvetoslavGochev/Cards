@@ -16,7 +16,7 @@
 
         public string Keyword { get; set; }
 
-        [Range(0,1000)]
+        [Range(1,1000)]
         public int Attack { get; set; }
 
         [Range(0,1000)]
