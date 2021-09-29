@@ -8,27 +8,27 @@
 
     public class Card
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
-        public string Name { get; set; }
+        //public string Name { get; set; }
 
-        public string ImageUrl { get; set; }
+        //public string ImageUrl { get; set; }
 
-        public string Keyword { get; set; }
+        //public string Keyword { get; set; }
 
-        [Range(1,1000)]
-        public int Attack { get; set; }
+        //[Range(1,1000)]
+        //public int Attack { get; set; }
 
-        [Range(0,1000)]
-        public int Health { get; set; }
+        //[Range(0,1000)]
+        //public int Health { get; set; }
 
-        [MaxLength(200)]
-        public string Description { get; set; }
+        //[MaxLength(200)]
+        //public string Description { get; set; }
 
-        //public string UserId { get; set; }
+        ////public string UserId { get; set; }
 
-        //public User User { get; set; }
+        ////public User User { get; set; }
 
-        public ICollection<UserCard> UserCards { get; set; } = new HashSet<UserCard>();
+        //public ICollection<UserCard> UserCards { get; set; } = new HashSet<UserCard>();
     }
 }

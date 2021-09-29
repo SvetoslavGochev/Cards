@@ -1,6 +1,7 @@
 namespace Cards
 {
     using Cards.Data;
+    using Cards.Data.Models;
     using Cards.Infrastructure;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -37,7 +38,15 @@ namespace Cards
             {
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<User>(options =>
+               {
+
+                   options.SignIn.RequireConfirmedAccount = true;
+                   options.Password.RequireDigit = false;
+                   options.Password.RequireLowercase = false;
+                   options.Password.RequireNonAlphanumeric = false;
+                   options.Password.RequireUppercase = false;
+               })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
         }

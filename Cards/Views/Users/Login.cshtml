@@ -1,0 +1,22 @@
+﻿@model UserLoginForm
+
+<h1 class="text-center mt-2">Login</h1>
+<hr class="bg-primary w-75">
+<form class="mx-auto w-50" method="post">
+
+    <div class="form-group">
+        <div class="label-holder text-white d-flex justify-content-center">
+            <label for="name" class="h3 mb-2">Name</label>
+        </div>
+        <input type="text" class="form-control" id="username" name="name" />
+    </div>
+    <div class="form-group">
+        <div class="label-holder text-white d-flex justify-content-center">
+            <label for="password" class="h3 mb-2">Password</label>
+        </div>
+        <input type="password" class="form-control" id="password" name="password" />
+    </div>
+    <div class="button-holder d-flex justify-content-center">
+        <button type="submit" class="btn btn-block btn-primary text-white mb-3">Login</button>
+    </div>
+</form>

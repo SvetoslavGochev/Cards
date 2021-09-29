@@ -8,12 +8,12 @@
     public class Cat
     {
 
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
-        public string Name { get; set; }
+        //public string Name { get; set; }
 
-        public string UserId { get; set; }
+        //public string UserId { get; set; }
 
-        public User User { get; init; }
+        //public User User { get; init; }
     }
 }
