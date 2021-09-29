@@ -16,10 +16,10 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder.Entity<Card>()
-            //       .HasMany(c => c.UserCards)
-            //       .WithMany(u => u.UserId)
-            //       .
+            builder.Entity<Card>()
+                   .HasMany(c => c.Users)
+                   .WithMany(u => u.Cards)
+                   
 
             //builder.Entity<Cat>()
             //       .HasOne(c => c.User)

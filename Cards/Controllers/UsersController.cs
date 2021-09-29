@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     public class UsersController : Controller
@@ -89,9 +90,25 @@
             return RedirectToAction("Index", "Home");
         }
 
+        public async Task<IActionResult> ChangePassword()
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            var userID = this.userManager.GetUserId(this.User);
+
+            var userID2 = this.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+
+            var userName =  this.userManager.GetUserName(this.User);
+
+
+            return this.View();
+        }
+
         private IActionResult gre6ki(UserLoginForm user)
         {
-            ModelState.AddModelError(string.Empty, "Gre6ka");
+            var error = "Gre6ka";
+
+            ModelState.AddModelError(string.Empty, error);
 
             return View(user);
         }
