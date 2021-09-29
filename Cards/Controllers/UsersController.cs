@@ -54,7 +54,7 @@
                 return View(user);
             }
 
-            return RedirectToAction(nameof(User), "Login");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -84,6 +84,7 @@
 
 
             await this.signManager.SignInAsync(logeetUser, true);
+
             //dokato sam ne se razlogne  6te stoi lognat
             return RedirectToAction("Index", "Home");
         }
