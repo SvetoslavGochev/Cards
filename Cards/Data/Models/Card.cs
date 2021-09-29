@@ -8,7 +8,7 @@
 
     public class Card
     {
-        public int Id { get; set; }
+        public int Id { get; init; } /*= new Guidf*/
 
         public string Name { get; set; }
 
@@ -29,6 +29,6 @@
 
         public User User { get; set; }
 
-        public ICollection<User> Users { get; set; } = new HashSet<User>();
+        public ICollection<UserCard> Users { get; init; } = new HashSet<UserCard>();
     }
 }

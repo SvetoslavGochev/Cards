@@ -14,19 +14,40 @@
         {
         }
 
+        public DbSet<Cat> Cats { get; init; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Card>()
-                   .HasMany(c => c.Users)
-                   .WithMany(u => u.Cards)
-                   
+            builder.Entity<UserCard>()
+         .HasKey(bc => new { bc.UserId, bc.CardId });
 
-            //builder.Entity<Cat>()
-            //       .HasOne(c => c.User)
-            //       .WithMany(u => u.Cats)
-            //       .HasForeignKey(c => c.UserId)
-            //       .OnDelete(DeleteBehavior.Restrict);
-             
+
+            builder.Entity<UserCard>()
+                .HasOne(bc => bc.User)
+                .WithMany(b => b.Cards)
+                .HasForeignKey(bc => bc.CardId);
+            builder.Entity<UserCard>()
+                .HasOne(bc => bc.Card)
+                .WithMany(c => c.Users)
+                .HasForeignKey(bc => bc.UserId);
+
+
+            builder.Entity<Cat>()
+                   .HasOne(c => c.User)
+                   //vsqka kotka ima edin user
+                   .WithMany(u => u.Cats)
+                   //vseki user ima mnogo kotki
+                   .HasForeignKey(c => c.UserId)
+                   //vsqka kotka ima foreing key
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            //builder
+            //   .Entity<Dealer>()
+            //   .HasOne<User>()
+            //   .WithOne()
+            //   .HasForeignKey<Dealer>(d => d.UserId)
+            //   .OnDelete(DeleteBehavior.Restrict);
+            //kato iztriem edin dilar da ne se trie usera
+            //vrazvame kam tablica user
             base.OnModelCreating(builder);
         }
 
