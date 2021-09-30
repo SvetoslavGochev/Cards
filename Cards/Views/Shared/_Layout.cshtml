@@ -25,18 +25,30 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
 
-                    @*@if (!User.Identity.IsAuthenticated)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Register">Register</a>
-                        </li>
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Register">Register</a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Login">Login</a>
-                        </li>
-                    }*@
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Login">Login</a>
+                            </li>
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white active h5" href="/Cards/Add">Add Card</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white active h5" href="/Cards/Collection">My Collection</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-danger active h5" href="/Users/Logout">Logout</a>
+                            </li>
+                        }
                     </ul>
-                    <partial name="_LoginPartial" />
+                    @*<partial name="_LoginPartial" />*@
                 </div>
             </div>
         </nav>

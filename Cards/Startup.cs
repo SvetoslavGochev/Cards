@@ -3,6 +3,8 @@ namespace Cards
     using Cards.Data;
     using Cards.Data.Models;
     using Cards.Infrastructure;
+    using Cards.Services;
+    using Cards.Services.Cards;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.HttpsPolicy;
@@ -49,6 +51,8 @@ namespace Cards
                })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddTransient<ICardsservice, CardsServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
