@@ -8,6 +8,13 @@
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
+     using Cards.Data.Models;
+    using Cards.Models.Users;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
 
     public class HomeController : Controller
     {

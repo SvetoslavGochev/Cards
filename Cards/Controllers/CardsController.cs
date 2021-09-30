@@ -28,27 +28,27 @@
         [HttpGet]
         public async Task<IActionResult> All()
         {
-
-            return this.View();
+            
+            return this.View(this.cardsservice.All());
         } 
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-
             return this.View();
         }
 
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Add(AddCardCollectionFormModel card)
+        public async Task<IActionResult> Add(CardCollectionFormModel card)
         {
             if (!ModelState.IsValid)
             {
                 return View(card);
             }
+            var userId = this.userManager.GetUserId(this.User);
 
-           await this.cardsservice.Create(card);
+            await this.cardsservice.Create(card, userId);
 
             return RedirectToAction(nameof(All));
         }

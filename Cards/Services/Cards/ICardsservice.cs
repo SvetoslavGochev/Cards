@@ -1,4 +1,5 @@
 ﻿using Cards.Models.Collection;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Cards.Services.Cards
@@ -7,6 +8,8 @@ namespace Cards.Services.Cards
 
     public interface ICardsservice
     {
-        Task Create(AddCardCollectionFormModel card);
+        Task Create(CardCollectionFormModel card, string userId);
+        IEnumerable<CardCollectionFormModel> All();
+
     }
 }
