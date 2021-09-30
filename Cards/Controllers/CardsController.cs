@@ -31,6 +31,7 @@
             
             return this.View(this.cardsservice.All());
         } 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Add()
         {
@@ -51,7 +52,19 @@
             await this.cardsservice.Create(card, userId);
 
             return RedirectToAction(nameof(All));
+        } 
+        
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Collection()
+        {
+            var userId = this.userManager.GetUserId(this.User);
+
+
+            return this.View(this.cardsservice.Collection(userId));
         }
+
+
     
     }
 }

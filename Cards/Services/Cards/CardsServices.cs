@@ -41,12 +41,36 @@ namespace Cards.Services
                     .ToList();
         }
 
+        public IEnumerable<Card> Collection(string userId)
+        {
+
+            var colectionId = this.data
+                .UsersCards
+                .Where(c => c.UserId == userId)
+                .Select(u => u.CardId)
+                .ToList();
+
+            var myCards = new List<Card>();
+
+            foreach (var cardId in colectionId)
+            {
+                var myCard = this.data
+                 .Cards
+                 .Where(c => c.Id == cardId)
+                 .FirstOrDefault();
+
+                myCards.Add(myCard);
+            }
+
+            return myCards;
+        }
+
         public async Task Create(CardCollectionFormModel card,string userId)
         {
 
 
 
-            var newcard = this.data.Cards
+            var newcard = this.data.Cards //!
                 .Select(c => new Card
                 {
                     Name = card.Name,
