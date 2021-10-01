@@ -16,6 +16,7 @@ namespace Cards.Services
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -68,8 +69,9 @@ namespace Cards.Services
             return myCards;
         }
 
-        public async Task Create(CardCollectionFormModel card, string userId)
+        public async Task Create(CardCollectionFormModel card,string userId)
         {
+
             var newcard = new Card
             {
                 Name = card.Name,
@@ -93,6 +95,7 @@ namespace Cards.Services
 
         public bool Delete(Card card)
         {
+
             try
             {
                 this.data.Cards.Remove(card);
@@ -113,8 +116,42 @@ namespace Cards.Services
              => this.data.Cards
                 .FirstOrDefault(c => c.Id == cardId);
 
+        public async Task<Tuple<bool, string>> GetKards(CardCollectionFormModel card, string userId)
+        {
+      
 
 
+            try
+            {
+                var newcard = new Card
+                {
+                    Name = card.Name,
+                    ImageUrl = card.Image,
+                    Attack = card.Attack,
+                    Health = card.Health,
+                    Description = card.Description,
+                    Keyword = card.Keyword
+                };
 
+
+                await this.data.Cards.AddAsync(newcard);
+
+                await this.data.UsersCards.AddAsync(new UserCard
+                {
+                    UserId = userId,
+                    CardId = newcard.Id
+                });
+
+                await this.data.SaveChangesAsync();
+
+                return Tuple.Create(true, "Successfully add a new Location");
+
+            }
+            catch (Exception ex)
+            {
+
+                return Tuple.Create(false, ex.Message);
+            }
+        }
     }
 }

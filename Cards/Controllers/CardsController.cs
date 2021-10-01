@@ -43,15 +43,32 @@
         [Authorize]
         public async Task<IActionResult> Add(CardCollectionFormModel card)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(card);
-            }
+
             var userId = this.userManager.GetUserId(this.User);
 
-            await this.cardsService.Create(card, userId);
+            if (this.ModelState.IsValid)
+            {
 
-            return RedirectToAction(nameof(All));
+                Tuple<bool, string> result = await this.cardsService.GetKards(card, userId);
+
+                if (!result.Item1)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return RedirectToAction(nameof(All));
+                }
+
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+            //await this.cardsService.Create(card, userId);
+
         }
 
         [HttpGet]
@@ -61,6 +78,7 @@
             var userId = this.userManager.GetUserId(this.User);
 
 
+
             return this.View(this.cardsService.Collection(userId));
         }
 
@@ -68,10 +86,7 @@
         [HttpGet]
         public async Task<IActionResult> RemoveFromCollection(string cardId)
         {
-            if (cardId == null)
-            {
-                return NotFound();
-            }
+
 
             var car = this.cardsService.GetCard(cardId);
 
