@@ -16,6 +16,6 @@ namespace Cards.Services.Cards
 
         Card GetCard(string cardId);
 
-        void Delete(Card card);
+        bool Delete(Card card);
     }
 }

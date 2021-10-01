@@ -79,8 +79,12 @@
             {
                 return NotFound();
             }
+            var carDelete = this.cardsService.Delete(car);
 
-            this.cardsService.Delete(car);
+            if (!carDelete)
+            {
+                return NotFound();
+            }
 
             return RedirectToAction(nameof(Collection));
 

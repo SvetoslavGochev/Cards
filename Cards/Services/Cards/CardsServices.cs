@@ -68,7 +68,7 @@ namespace Cards.Services
             return myCards;
         }
 
-        public async Task Create(CardCollectionFormModel card,string userId)
+        public async Task Create(CardCollectionFormModel card, string userId)
         {
 
 
@@ -96,11 +96,22 @@ namespace Cards.Services
             await this.data.SaveChangesAsync();
         }
 
-        public async void Delete(Card card)
+        public bool Delete(Card card)
         {
-            this.data.Cards.Remove(card);
+            try
+            {
+                this.data.Cards.Remove(card);
 
-            this.data.SaveChanges();
+                this.data.SaveChanges();
+
+            }
+            catch (System.Exception)
+            {
+
+                return false;
+            }
+
+            return true;
         }
 
         public Card GetCard(string cardId)
