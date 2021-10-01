@@ -70,20 +70,15 @@ namespace Cards.Services
 
         public async Task Create(CardCollectionFormModel card, string userId)
         {
-
-
-
-            var newcard = this.data.Cards //!
-                .Select(c => new Card
-                {
-                    Name = card.Name,
-                    ImageUrl = card.Image,
-                    Attack = card.Attack,
-                    Health = card.Health,
-                    Description = card.Description,
-                    Keyword = card.Keyword
-                })
-                .FirstOrDefault();
+            var newcard = new Card
+            {
+                Name = card.Name,
+                ImageUrl = card.Image,
+                Attack = card.Attack,
+                Health = card.Health,
+                Description = card.Description,
+                Keyword = card.Keyword
+            };
 
 
             await this.data.Cards.AddAsync(newcard);
