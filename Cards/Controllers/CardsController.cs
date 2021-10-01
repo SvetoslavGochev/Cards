@@ -15,29 +15,29 @@
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signManager;
-        private readonly ICardsservice cardsservice;
+        private readonly ICardsservice cardsService;
 
         public CardsController(SignInManager<User> signManager, UserManager<User> userManager, ICardsservice cardsservice)
         {
             this.signManager = signManager;
             this.userManager = userManager;
-            this.cardsservice = cardsservice;
+            this.cardsService = cardsservice;
         }
 
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> All()
         {
-            
-            return this.View(this.cardsservice.All());
-        } 
+
+            return this.View(this.cardsService.All());
+        }
+
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> Add()
         {
             return this.View();
         }
-
 
         [HttpPost]
         [Authorize]
@@ -49,11 +49,11 @@
             }
             var userId = this.userManager.GetUserId(this.User);
 
-            await this.cardsservice.Create(card, userId);
+            await this.cardsService.Create(card, userId);
 
             return RedirectToAction(nameof(All));
-        } 
-        
+        }
+
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Collection()
@@ -61,10 +61,32 @@
             var userId = this.userManager.GetUserId(this.User);
 
 
-            return this.View(this.cardsservice.Collection(userId));
+            return this.View(this.cardsService.Collection(userId));
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Delete(string cardId)
+        {
+            if (cardId == null)
+            {
+                return NotFound();
+            }
+
+            var car = this.cardsService.GetCard(cardId);
+
+            if (car == null)
+            {
+                return NotFound();
+            }
+
+            this.cardsService.Delete(car);
+
+            return RedirectToAction(nameof(Collection));
+
         }
 
 
-    
+
     }
 }

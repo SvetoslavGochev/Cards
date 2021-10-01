@@ -26,7 +26,10 @@ namespace Cards.Services
         private readonly IMapper mapper;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signManager;
-        public CardsServices(ApplicationDbContext data, IMapper mapper, UserManager<User> userManager, SignInManager<User> signManager)
+        public CardsServices(ApplicationDbContext data,
+            IMapper mapper,
+            UserManager<User> userManager,
+            SignInManager<User> signManager)
         {
             this.data = data;
             this.mapper = mapper;
@@ -92,5 +95,20 @@ namespace Cards.Services
             });
             await this.data.SaveChangesAsync();
         }
+
+        public async void Delete(Card card)
+        {
+            this.data.Cards.Remove(card);
+
+            this.data.SaveChanges();
+        }
+
+        public Card GetCard(string cardId)
+             => this.data.Cards
+                .FirstOrDefault(c => c.Id == cardId);
+
+
+
+
     }
 }

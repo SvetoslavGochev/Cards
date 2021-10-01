@@ -55,7 +55,7 @@
                 return View(user);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         [HttpGet]
@@ -87,7 +87,7 @@
             await this.signManager.SignInAsync(logeetUser, true);
 
             //dokato sam ne se razlogne  6te stoi lognat
-            return RedirectToAction("All", "Cards");
+            return RedirectToAction(nameof(CardsController.All), nameof(Cards));
         }
 
         public async Task<IActionResult> ChangePassword()
