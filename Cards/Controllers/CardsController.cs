@@ -65,8 +65,8 @@
         }
 
         [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> Delete(string cardId)
+        [HttpGet]
+        public async Task<IActionResult> RemoveFromCollection(string cardId)
         {
             if (cardId == null)
             {
