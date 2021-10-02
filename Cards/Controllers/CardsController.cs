@@ -28,8 +28,18 @@
         [HttpGet]
         public async Task<IActionResult> All()
         {
+            var result = await this.cardsService.All();
 
-            return this.View(this.cardsService.All());
+            if (!result.Item1)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return this.View(result.Item2);
+            }
+
+            
         }
 
         [Authorize]

@@ -16,7 +16,8 @@ namespace Cards.Services.Cards
 
 
         Task Create(CardCollectionFormModel card, string userId);
-        IEnumerable<CardCollectionFormModel> All();
+
+        Task<Tuple<bool, List<CardCollectionFormModel>>> All();
 
         Task<Tuple<bool, List<Card>>> MyCollection(string userId);
 

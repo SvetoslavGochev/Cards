@@ -18,7 +18,7 @@ namespace Cards.Services
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class CardsServices : Controller, ICardsservice
+    public class CardsServices : ICardsservice
     {
         private readonly ApplicationDbContext data;
         private readonly IMapper mapper;
@@ -35,11 +35,23 @@ namespace Cards.Services
             this.signManager = signManager;
         }
 
-        public IEnumerable<CardCollectionFormModel> All()
+        public async Task<Tuple<bool, List<CardCollectionFormModel>>> All()
         {
-            return this.data
-                    .Cards.ProjectTo<CardCollectionFormModel>(this.mapper.ConfigurationProvider)
-                    .ToList();
+            try
+            {
+                var result = await this.data
+                       .Cards.ProjectTo<CardCollectionFormModel>(this.mapper.ConfigurationProvider)
+                       .ToListAsync();
+
+                return Tuple.Create(true, result);
+            }
+            catch (Exception ex)
+            {
+               
+                return Tuple.Create(false, new List<CardCollectionFormModel>());
+            }
+
+
         }
 
         public async Task Create(CardCollectionFormModel card, string userId)
@@ -153,5 +165,7 @@ namespace Cards.Services
 
             return Tuple.Create(false, new List<Card>());
         }
+
+
     }
 }
