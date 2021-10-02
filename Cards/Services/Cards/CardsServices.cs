@@ -80,7 +80,7 @@ namespace Cards.Services
                 });
                 await this.data.SaveChangesAsync();
 
-                return Tuple.Create(true, "Suucefuly create new card")
+                return Tuple.Create(true, "Suucefuly create new card");
             }
             catch (Exception ex)
             {
