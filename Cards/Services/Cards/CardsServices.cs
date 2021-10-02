@@ -1,24 +1,21 @@
 ﻿
+
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Cards.Data;
 using Cards.Data.Models;
 using Cards.Models.Collection;
 using Cards.Services.Cards;
-using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Security.Claims;
 
 namespace Cards.Services
 {
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Linq;
-    using System.Security.Claims;
     using System.Threading.Tasks;
 
     public class CardsServices : Controller, ICardsservice
@@ -45,31 +42,7 @@ namespace Cards.Services
                     .ToList();
         }
 
-        public IEnumerable<Card> Collection(string userId)
-        {
-
-            var colectionId = this.data
-                .UsersCards
-                .Where(c => c.UserId == userId)
-                .Select(u => u.CardId)
-                .ToList();
-
-            var myCards = new List<Card>();
-
-            foreach (var cardId in colectionId)
-            {
-                var myCard = this.data
-                 .Cards
-                 .Where(c => c.Id == cardId)
-                 .FirstOrDefault();
-
-                myCards.Add(myCard);
-            }
-
-            return myCards;
-        }
-
-        public async Task Create(CardCollectionFormModel card,string userId)
+        public async Task Create(CardCollectionFormModel card, string userId)
         {
 
             var newcard = new Card
@@ -118,8 +91,6 @@ namespace Cards.Services
 
         public async Task<Tuple<bool, string>> GetKards(CardCollectionFormModel card, string userId)
         {
-      
-
 
             try
             {
@@ -152,6 +123,35 @@ namespace Cards.Services
 
                 return Tuple.Create(false, ex.Message);
             }
+        }
+
+        public async Task<Tuple<bool, List<Card>>> MyCollection(string userId)
+        {
+            var colectionId = this.data
+                .UsersCards
+                .Where(c => c.UserId == userId)
+                .Select(u => u.CardId)
+                .ToList();
+
+            if (colectionId != null)
+            {
+
+                var myCards = new List<Card>();
+
+                foreach (var cardId in colectionId)
+                {
+                    var myCard = await this.data
+                     .Cards
+                     .FirstOrDefaultAsync(c => c.Id == cardId);
+
+
+                    myCards.Add(myCard);
+                }
+
+                return Tuple.Create(true, myCards);
+            }
+
+            return Tuple.Create(false, new List<Card>());
         }
     }
 }

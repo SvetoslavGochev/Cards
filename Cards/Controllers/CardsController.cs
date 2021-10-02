@@ -75,11 +75,22 @@
         [Authorize]
         public async Task<IActionResult> Collection()
         {
-            var userId = this.userManager.GetUserId(this.User);
 
 
+            var userId =  this.userManager.GetUserId(this.User);
 
-            return this.View(this.cardsService.Collection(userId));
+
+            var result = await this.cardsService.MyCollection(userId);
+
+            if (!result.Item1)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return this.View(result.Item2);
+            }
+
         }
 
         [Authorize]
