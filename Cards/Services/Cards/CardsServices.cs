@@ -47,35 +47,46 @@ namespace Cards.Services
             }
             catch (Exception ex)
             {
-               
+
                 return Tuple.Create(false, new List<CardCollectionFormModel>());
             }
 
 
         }
 
-        public async Task Create(CardCollectionFormModel card, string userId)
+        public async Task<Tuple<bool, string>> Create(CardCollectionFormModel card, string userId)
         {
 
-            var newcard = new Card
+            try
             {
-                Name = card.Name,
-                ImageUrl = card.Image,
-                Attack = card.Attack,
-                Health = card.Health,
-                Description = card.Description,
-                Keyword = card.Keyword
-            };
+
+                var newcard = new Card
+                {
+                    Name = card.Name,
+                    ImageUrl = card.Image,
+                    Attack = card.Attack,
+                    Health = card.Health,
+                    Description = card.Description,
+                    Keyword = card.Keyword
+                };
 
 
-            await this.data.Cards.AddAsync(newcard);
+                await this.data.Cards.AddAsync(newcard);
 
-            await this.data.UsersCards.AddAsync(new UserCard
+                await this.data.UsersCards.AddAsync(new UserCard
+                {
+                    UserId = userId,
+                    CardId = newcard.Id
+                });
+                await this.data.SaveChangesAsync();
+
+                return Tuple.Create(true, "Suucefuly create new card")
+            }
+            catch (Exception ex)
             {
-                UserId = userId,
-                CardId = newcard.Id
-            });
-            await this.data.SaveChangesAsync();
+
+                return Tuple.Create(false, ex.Message);
+            }
         }
 
         public bool Delete(Card card)

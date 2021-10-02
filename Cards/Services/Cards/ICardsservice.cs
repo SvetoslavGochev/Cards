@@ -13,9 +13,7 @@ namespace Cards.Services.Cards
     {
         Task<Tuple<bool, string>> GetKards(CardCollectionFormModel cards, string userId);
 
-
-
-        Task Create(CardCollectionFormModel card, string userId);
+        Task<Tuple<bool, string>> Create(CardCollectionFormModel card, string userId);
 
         Task<Tuple<bool, List<CardCollectionFormModel>>> All();
 
